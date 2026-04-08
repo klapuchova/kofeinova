@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kofeinova.cz — vše o kofeinu. Káva, matcha, energy drinky, suplementy a způsoby přípravy." />
+  <title>Kofeinová — svět kofeinu</title>
+  <style>
+    :root {
+      --purple: #6b2fa0;
+      --bg:     #ede4f5;
+      --text:   #1a1008;
+      --muted:  #7a6a8a;
+      --ink:    #2a1a0e;
+
+      /* ZX Spectrum palette */
+      --zx-cyan:    #00cfcf;
+      --zx-magenta: #cf00cf;
+      --zx-yellow:  #d4d400;
+      --zx-green:   #00c800;
+      --zx-blue:    #5555ff;
+      --zx-red:     #d40000;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--purple); }
+
+    /* ── MASTHEAD ────────────────────────────────────────── */
+    header {
+      border-top: 4px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg);
+    }
+
+    .logo {
+      overflow: hidden;
+      width: 140px;
+      height: 190px;
+      flex-shrink: 0;
+    }
+    .logo img {
+      height: 320px;
+      width: auto;
+      display: block;
+      mix-blend-mode: multiply;
+      margin-top: -72px;
+      margin-left: -168px;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid transparent;
+    }
+    nav a:hover {
+      color: var(--purple);
+      border-bottom-color: var(--purple);
+    }
+
+    /* ── CONTAINER ───────────────────────────────────────── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── SECTION LABEL ───────────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--ink);
+      opacity: 0.25;
+    }
+
+    /* ── ARTICLE GRID ────────────────────────────────────── */
+    section.articles { padding: 3rem 0; }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    /* ── ARTICLE CARD — ZX Spectrum styl ─────────────────── */
+    article.card {
+      display: flex;
+      flex-direction: column;
+      border: 3px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      background: #fff;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    article.card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    /* každá karta má jinou barvu těla — jako spectrum dlaždice */
+    article.card:nth-child(1) .card-body { background: var(--zx-cyan); }
+    article.card:nth-child(2) .card-body { background: var(--zx-magenta); color: #fff; }
+    article.card:nth-child(3) .card-body { background: var(--zx-yellow); }
+    article.card:nth-child(4) .card-body { background: var(--zx-green); }
+    article.card:nth-child(5) .card-body { background: var(--zx-blue); color: #fff; }
+    article.card:nth-child(6) .card-body { background: var(--zx-red); color: #fff; }
+
+    /* opakuj paletu od 7. karty */
+    article.card:nth-child(7)  .card-body { background: var(--zx-cyan); }
+    article.card:nth-child(8)  .card-body { background: var(--zx-magenta); color: #fff; }
+    article.card:nth-child(9)  .card-body { background: var(--zx-yellow); }
+
+    .card-image {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-bottom: 3px solid var(--ink);
+    }
+    .card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: filter 0.3s;
+    }
+    article.card:hover .card-image img { filter: brightness(1.05); }
+
+    .card-body {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .card-category {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: bold;
+      opacity: 0.7;
+    }
+
+    .card-body h2 {
+      font-size: 0.92rem;
+      font-weight: bold;
+      line-height: 1.35;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .card-body p {
+      font-size: 0.8rem;
+      flex: 1;
+      opacity: 0.85;
+    }
+
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.75rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid rgba(0,0,0,0.2);
+      font-size: 0.68rem;
+      opacity: 0.8;
+    }
+
+    .read-more {
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .read-more:hover { text-decoration: underline; }
+
+    /* ── O WEBU ──────────────────────────────────────────── */
+    section#o-webu {
+      padding: 3rem 0;
+      border-top: 2px solid var(--ink);
+    }
+    section#o-webu p.body {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    /* ── FULL ARTICLE (budoucí) ──────────────────────────── */
+    article.post { padding: 4rem 0; max-width: 680px; }
+    article.post h1 { font-size: clamp(1.5rem, 4vw, 2.4rem); line-height: 1.2; margin-bottom: 0.5rem; }
+    article.post .post-meta {
+      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em;
+      margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--ink);
+    }
+    article.post figure { margin: 2rem 0; }
+    article.post figure img { width: 100%; display: block; }
+    article.post figure figcaption { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-align: center; }
+    article.post p { margin-bottom: 1.25rem; }
+    article.post h2 {
+      font-size: 1.2rem; margin: 2rem 0 0.75rem; color: var(--purple);
+      border-left: 3px solid var(--purple); padding-left: 0.6rem;
+    }
+
+    /* affiliate */
+    .affiliate-box {
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 1.25rem; margin: 2rem 0; font-size: 0.88rem;
+      background: var(--zx-cyan);
+    }
+    .affiliate-box strong { color: var(--ink); }
+    .affiliate-box a {
+      display: inline-block; margin-top: 0.75rem;
+      border: 2px solid var(--ink); padding: 0.35rem 1rem;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: bold; background: #fff;
+    }
+    .affiliate-box a:hover { background: var(--ink); color: var(--bg); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    footer a:hover { color: var(--purple); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 720px) {
+      .article-grid { grid-template-columns: 1fr; }
+      header { padding: 1rem; }
+      nav ul { gap: 1.25rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── MASTHEAD ───────────────────────────────────────── -->
+  <header>
+    <a href="/" class="logo" aria-label="Kofeinová – domů">
+      <img src="logo_kofein.png" alt="Kofeinová" />
+    </a>
+    <nav aria-label="Hlavní navigace">
+      <ul>
+        <li><a href="#clanky">Články</a></li>
+        <li><a href="#kategorie">Kategorie</a></li>
+        <li><a href="#o-webu">O webu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── HLAVNÍ OBSAH ───────────────────────────────────── -->
+  <main>
+    <div class="container">
+
+      <!-- ── ČLÁNKY ─────────────────────────────────────── -->
+      <section class="articles" id="clanky" aria-labelledby="articles-heading">
+        <p class="section-label" id="articles-heading">Nejnovější články</p>
+
+        <div class="article-grid">
+
+          <!-- Karta článku — zkopíruj tento blok pro každý nový článek -->
+          <article class="card">
+            <div class="card-image">
+              <a href="/clanek-1/">
+                <img src="hero.jpg" alt="Popis obrázku článku" loading="lazy" />
+              </a>
+            </div>
+            <div class="card-body">
+              <span class="card-category">Káva</span>
+              <h2><a href="/clanek-1/">Jak uvařit dokonalou tureckou kávu doma</a></h2>
+              <p>Turecká káva je jednou z nejstarších metod přípravy. Poradíme ti, jak na to krok za krokem.</p>
+              <div class="card-meta">
+                <time datetime="2026-04-08">08. 04. 2026</time>
+                <a href="/clanek-1/" class="read-more">číst →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image">
+              <a href="/clanek-2/">
+                <img src="hero.jpg" alt="Popis obrázku článku" loading="lazy" />
+              </a>
+            </div>
+            <div class="card-body">
+              <span class="card-category">Matcha</span>
+              <h2><a href="/clanek-2/">Matcha vs. káva — co ti dá více energie?</a></h2>
+              <p>Kofein z matchy a kofein z kávy se v těle chovají jinak. Podívej se na vědecké srovnání.</p>
+              <div class="card-meta">
+                <time datetime="2026-04-01">01. 04. 2026</time>
+                <a href="/clanek-2/" class="read-more">číst →</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="card-image">
+              <a href="/clanek-3/">
+                <img src="hero.jpg" alt="Popis obrázku článku" loading="lazy" />
+              </a>
+            </div>
+            <div class="card-body">
+              <span class="card-category">Suplementy</span>
+              <h2><a href="/clanek-3/">Kofein v kapslích — kdy má smysl a kdy ne?</a></h2>
+              <p>Suplementy s kofeinem slibují přesnou dávku bez hořkosti. Kdy jsou skutečně užitečné?</p>
+              <div class="card-meta">
+                <time datetime="2026-03-25">25. 03. 2026</time>
+                <a href="/clanek-3/" class="read-more">číst →</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── O WEBU ──────────────────────────────────────── -->
+      <section id="o-webu" aria-labelledby="about-heading">
+        <p class="section-label" id="about-heading">O webu</p>
+        <p class="body">
+          Kofeinová.cz je místo pro lidi, kteří berou kofein vážně — ať už si pochutnávají na single origin espressu, nebo optimalizují výkon pomocí suplementů. Píšeme bez reklam v textu, jen čisté informace.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <footer>
+    <span>&copy; 2026 <a href="/">kofeinová.cz</a></span>
+    <span>
+      <a href="/ochrana-soukromi/">Ochrana soukromí</a>
+      &nbsp;·&nbsp;
+      <a href="/cookies/">Cookies</a>
+    </span>
+  </footer>
+
+  <!-- ── IN PROGRESS OVERLAY ───────────────────────────── -->
+  <div id="wip">
+    <div id="wip-box">
+      <p id="wip-label">// in progress</p>
+      <p id="wip-text">Web se právě připravuje.<br>Brzy tu bude něco silného.</p>
+    </div>
+  </div>
+
+  <style>
+    #wip {
+      position: fixed;
+      inset: 0;
+      background: rgba(30, 10, 50, 0.82);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #wip-box {
+      border: 3px solid #fff;
+      box-shadow: 6px 6px 0 var(--zx-cyan);
+      padding: 2.5rem 3rem;
+      text-align: center;
+      background: var(--ink);
+      color: #fff;
+      max-width: 380px;
+    }
+
+    #wip-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--zx-cyan);
+      margin-bottom: 1rem;
+    }
+
+    #wip-text {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      font-family: 'Courier New', Courier, monospace;
+    }
+  </style>
+
+</body>
+</html>
