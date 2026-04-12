@@ -4,91 +4,155 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Kofeinova.cz — vše o kofeinu. Káva, matcha, energy drinky, suplementy a způsoby přípravy." />
-  <title>Kofeinová — svět kofeinu</title>
+  <title>Kofeinova.cz — svět kofeinu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --purple: #6b2fa0;
-      --bg:     #ede4f5;
-      --text:   #1a1008;
-      --muted:  #7a6a8a;
-      --ink:    #2a1a0e;
+      --purple:     #c084fc;
+      --bg:         #0d0820;
+      --text:       #ffffff;
+      --muted:      #ffffff;
+      --ink:        #e0d0f0;
 
-      /* ZX Spectrum palette */
       --zx-cyan:    #00cfcf;
       --zx-magenta: #cf00cf;
       --zx-yellow:  #d4d400;
       --zx-green:   #00c800;
       --zx-blue:    #5555ff;
       --zx-red:     #d40000;
+
+      --maze:       #2121de;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background-color: #0d0820;
+      background-image:
+        radial-gradient(ellipse at 25% 35%, rgba(111,47,160,0.45) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 65%, rgba(85,85,255,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 15%, rgba(0,180,180,0.15) 0%, transparent 40%),
+        radial-gradient(white 1px, transparent 1px),
+        radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
+      background-size:
+        100% 100%, 100% 100%, 100% 100%,
+        180px 180px, 120px 120px;
+      background-position:
+        0 0, 0 0, 0 0, 0 0, 60px 60px;
+      background-attachment: fixed;
       color: var(--text);
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 1rem;
-      line-height: 1.75;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      line-height: 2;
     }
 
     a { color: inherit; text-decoration: none; }
     a:hover { color: var(--purple); }
 
-    /* ── MASTHEAD ────────────────────────────────────────── */
+    /* ── HEADER ──────────────────────────────────────────── */
     header {
-      border-top: 4px solid var(--ink);
-      border-bottom: 2px solid var(--ink);
-      padding: 0.5rem 2rem;
+      border-bottom: 4px solid var(--maze);
+      box-shadow: 0 4px 0 0 rgba(33,33,222,0.4);
+      padding: 0.6rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: var(--bg);
+      background: rgba(13,8,32,0.92);
+    }
+
+    #pacman-trail {
+      width: 100%;
+      height: 20px;
+      display: block;
     }
 
     .logo {
-      overflow: hidden;
-      width: 140px;
-      height: 190px;
       flex-shrink: 0;
+      width: 110px;
+      height: 90px;
+      overflow: hidden;
     }
     .logo img {
-      height: 320px;
+      height: 180px;
       width: auto;
       display: block;
-      mix-blend-mode: multiply;
-      margin-top: -72px;
-      margin-left: -168px;
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(150deg)
+              drop-shadow(0 0 6px #00cfcf) drop-shadow(0 0 12px rgba(0,207,207,0.5));
+      mix-blend-mode: screen;
+      margin-top: -48px;
+      margin-left: -82px;
+      animation: logo-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes logo-pulse {
+      0%, 100% { filter: invert(1) sepia(1) saturate(5) hue-rotate(150deg)
+                         drop-shadow(0 0 6px #00cfcf) drop-shadow(0 0 12px rgba(0,207,207,0.5)); }
+      50%       { filter: invert(1) sepia(1) saturate(5) hue-rotate(150deg)
+                         drop-shadow(0 0 12px #00cfcf) drop-shadow(0 0 28px rgba(0,207,207,0.8)); }
+    }
+
+    .caffeine-board {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 6px;
+      letter-spacing: 0.15em;
+    }
+    .caffeine-board .label { color: var(--zx-cyan); font-size: 6px; text-transform: uppercase; }
+    .caffeine-bar {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+    }
+    .caffeine-bar .segment {
+      width: 10px;
+      height: 14px;
+      background: #1a0f2e;
+      border: 1px solid #444;
+      transition: background 0.3s;
+    }
+    .caffeine-bar .segment.active { background: var(--zx-cyan); }
+    .caffeine-bar .segment.warm   { background: var(--zx-yellow); }
+    .caffeine-bar .segment.hot    { background: var(--zx-red); }
+    .caffeine-status {
+      font-size: 6px;
+      color: var(--zx-cyan);
+      letter-spacing: 0.1em;
+      text-align: center;
+      min-height: 10px;
     }
 
     nav ul { list-style: none; display: flex; gap: 2rem; }
     nav a {
-      font-size: 0.78rem;
+      font-size: 8px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid transparent;
+      color: var(--zx-cyan);
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s;
     }
     nav a:hover {
-      color: var(--purple);
-      border-bottom-color: var(--purple);
+      color: var(--zx-yellow);
+      border-bottom-color: var(--zx-yellow);
     }
 
     /* ── CONTAINER ───────────────────────────────────────── */
     .container {
-      max-width: 960px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 0 2rem;
     }
 
     /* ── SECTION LABEL ───────────────────────────────────── */
     .section-label {
-      font-size: 0.7rem;
+      font-size: 8px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--purple);
+      color: var(--zx-cyan);
       margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
@@ -97,9 +161,9 @@
     .section-label::after {
       content: '';
       flex: 1;
-      height: 1px;
-      background: var(--ink);
-      opacity: 0.25;
+      height: 4px;
+      border-top: 4px solid var(--maze);
+      opacity: 0.7;
     }
 
     /* ── ARTICLE GRID ────────────────────────────────────── */
@@ -108,40 +172,48 @@
     .article-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 0;
+      border: 4px solid var(--maze);
+      box-shadow: 0 0 20px rgba(33,33,222,0.2);
     }
 
-    /* ── ARTICLE CARD — ZX Spectrum styl ─────────────────── */
+    /* ── ARTICLE CARD ────────────────────────────────────── */
     article.card {
       display: flex;
       flex-direction: column;
-      border: 3px solid var(--ink);
-      box-shadow: 6px 6px 0 var(--ink);
-      background: #fff;
-      transition: transform 0.1s, box-shadow 0.1s;
+      background: #0a0518;
+      border: 4px solid var(--maze);
+      position: relative;
+      transition: filter 0.15s;
     }
-    article.card:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 8px 8px 0 var(--ink);
+    article.card:hover { filter: brightness(1.15); }
+
+    article.card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-top:  2px solid rgba(255,255,255,0.1);
+      border-left: 2px solid rgba(255,255,255,0.1);
+      border-bottom: 2px solid rgba(0,0,0,0.4);
+      border-right:  2px solid rgba(0,0,0,0.4);
+      pointer-events: none;
+      z-index: 1;
     }
 
-    /* každá karta má jinou barvu těla — jako spectrum dlaždice */
-    article.card:nth-child(1) .card-body { background: var(--zx-cyan); }
+    article.card:nth-child(1) .card-body { background: var(--zx-cyan);    color: #000; }
     article.card:nth-child(2) .card-body { background: var(--zx-magenta); color: #fff; }
-    article.card:nth-child(3) .card-body { background: var(--zx-yellow); }
-    article.card:nth-child(4) .card-body { background: var(--zx-green); }
-    article.card:nth-child(5) .card-body { background: var(--zx-blue); color: #fff; }
-    article.card:nth-child(6) .card-body { background: var(--zx-red); color: #fff; }
-
-    /* opakuj paletu od 7. karty */
-    article.card:nth-child(7)  .card-body { background: var(--zx-cyan); }
-    article.card:nth-child(8)  .card-body { background: var(--zx-magenta); color: #fff; }
-    article.card:nth-child(9)  .card-body { background: var(--zx-yellow); }
+    article.card:nth-child(3) .card-body { background: var(--zx-yellow);  color: #000; }
+    article.card:nth-child(4) .card-body { background: var(--zx-green);   color: #000; }
+    article.card:nth-child(5) .card-body { background: var(--zx-blue);    color: #fff; }
+    article.card:nth-child(6) .card-body { background: var(--zx-red);     color: #fff; }
+    article.card:nth-child(7) .card-body { background: var(--zx-cyan);    color: #000; }
+    article.card:nth-child(8) .card-body { background: var(--zx-magenta); color: #fff; }
+    article.card:nth-child(9) .card-body { background: var(--zx-yellow);  color: #000; }
 
     .card-image {
       aspect-ratio: 4 / 3;
       overflow: hidden;
-      border-bottom: 3px solid var(--ink);
+      border-bottom: 4px solid var(--maze);
     }
     .card-image img {
       width: 100%;
@@ -150,36 +222,39 @@
       display: block;
       transition: filter 0.3s;
     }
-    article.card:hover .card-image img { filter: brightness(1.05); }
+    article.card:hover .card-image img { filter: brightness(1.1) saturate(1.2); }
 
     .card-body {
       padding: 1rem;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.5rem;
     }
 
     .card-category {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
+      font-size: 6px;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       font-weight: bold;
       opacity: 0.7;
     }
 
     .card-body h2 {
-      font-size: 0.92rem;
+      font-size: 8px;
       font-weight: bold;
-      line-height: 1.35;
+      line-height: 1.6;
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
 
     .card-body p {
-      font-size: 0.8rem;
+      font-size: 12px;
       flex: 1;
-      opacity: 0.85;
+      opacity: 0.9;
+      line-height: 1.7;
+      font-family: 'Courier New', Courier, monospace;
+      letter-spacing: 0.01em;
     }
 
     .card-meta {
@@ -188,9 +263,9 @@
       align-items: center;
       margin-top: 0.75rem;
       padding-top: 0.5rem;
-      border-top: 1px solid rgba(0,0,0,0.2);
-      font-size: 0.68rem;
-      opacity: 0.8;
+      border-top: 2px solid rgba(0,0,0,0.25);
+      font-size: 6px;
+      opacity: 0.85;
     }
 
     .read-more {
@@ -203,63 +278,53 @@
     /* ── O WEBU ──────────────────────────────────────────── */
     section#o-webu {
       padding: 3rem 0;
-      border-top: 2px solid var(--ink);
+      border-top: 4px solid var(--maze);
     }
     section#o-webu p.body {
-      max-width: 560px;
+      max-width: 620px;
       color: var(--muted);
-      font-size: 0.88rem;
+      font-size: 15px;
+      line-height: 1.9;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: normal;
+      letter-spacing: 0.02em;
     }
-
-    /* ── FULL ARTICLE (budoucí) ──────────────────────────── */
-    article.post { padding: 4rem 0; max-width: 680px; }
-    article.post h1 { font-size: clamp(1.5rem, 4vw, 2.4rem); line-height: 1.2; margin-bottom: 0.5rem; }
-    article.post .post-meta {
-      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em;
-      margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--ink);
-    }
-    article.post figure { margin: 2rem 0; }
-    article.post figure img { width: 100%; display: block; }
-    article.post figure figcaption { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; text-align: center; }
-    article.post p { margin-bottom: 1.25rem; }
-    article.post h2 {
-      font-size: 1.2rem; margin: 2rem 0 0.75rem; color: var(--purple);
-      border-left: 3px solid var(--purple); padding-left: 0.6rem;
-    }
-
-    /* affiliate */
-    .affiliate-box {
-      border: 3px solid var(--ink);
-      box-shadow: 4px 4px 0 var(--ink);
-      padding: 1.25rem; margin: 2rem 0; font-size: 0.88rem;
-      background: var(--zx-cyan);
-    }
-    .affiliate-box strong { color: var(--ink); }
-    .affiliate-box a {
-      display: inline-block; margin-top: 0.75rem;
-      border: 2px solid var(--ink); padding: 0.35rem 1rem;
-      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
-      font-weight: bold; background: #fff;
-    }
-    .affiliate-box a:hover { background: var(--ink); color: var(--bg); }
 
     /* ── FOOTER ──────────────────────────────────────────── */
     footer {
-      border-top: 2px solid var(--ink);
-      padding: 2rem;
+      border-top: 4px solid var(--maze);
+      background: rgba(13,8,32,0.7);
+      display: flex;
+      flex-direction: column;
+    }
+    .footer-content {
+      padding: 1.5rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.75rem;
+      font-size: 7px;
       color: var(--muted);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
-    footer a:hover { color: var(--purple); }
+    footer a:hover { color: var(--zx-cyan); }
+
+    .lives {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .life-icon {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--zx-yellow);
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 20% 100%, 0% 35%);
+    }
 
     /* ── RESPONSIVE ──────────────────────────────────────── */
     @media (max-width: 720px) {
       .article-grid { grid-template-columns: 1fr; }
-      header { padding: 1rem; }
+      header { padding: 0.8rem 1rem; }
       nav ul { gap: 1.25rem; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
@@ -267,11 +332,29 @@
 </head>
 <body>
 
-  <!-- ── MASTHEAD ───────────────────────────────────────── -->
+  <!-- ── HEADER ────────────────────────────────────────────── -->
   <header>
-    <a href="/" class="logo" aria-label="Kofeinová – domů">
-      <img src="logo_kofein.png" alt="Kofeinová" />
+    <a href="/" class="logo" aria-label="Kofeinova – domů">
+      <img src="logo_kofein.png" alt="Kofeinova" />
     </a>
+
+    <div class="caffeine-board">
+      <span class="label">☕ kofein</span>
+      <div class="caffeine-bar" id="caf-bar">
+        <div class="segment" data-i="0"></div>
+        <div class="segment" data-i="1"></div>
+        <div class="segment" data-i="2"></div>
+        <div class="segment" data-i="3"></div>
+        <div class="segment" data-i="4"></div>
+        <div class="segment" data-i="5"></div>
+        <div class="segment" data-i="6"></div>
+        <div class="segment" data-i="7"></div>
+        <div class="segment" data-i="8"></div>
+        <div class="segment" data-i="9"></div>
+      </div>
+      <span class="caffeine-status" id="caf-status">žádný</span>
+    </div>
+
     <nav aria-label="Hlavní navigace">
       <ul>
         <li><a href="#clanky">Články</a></li>
@@ -279,23 +362,22 @@
         <li><a href="#o-webu">O webu</a></li>
       </ul>
     </nav>
+
   </header>
 
-  <!-- ── HLAVNÍ OBSAH ───────────────────────────────────── -->
+  <!-- ── HLAVNÍ OBSAH ───────────────────────────────────────── -->
   <main>
     <div class="container">
 
-      <!-- ── ČLÁNKY ─────────────────────────────────────── -->
       <section class="articles" id="clanky" aria-labelledby="articles-heading">
         <p class="section-label" id="articles-heading">Nejnovější články</p>
 
         <div class="article-grid">
 
-          <!-- Karta článku — zkopíruj tento blok pro každý nový článek -->
           <article class="card">
             <div class="card-image">
               <a href="/clanek-1/">
-                <img src="hero.jpg" alt="Popis obrázku článku" loading="lazy" />
+                <img src="hero.jpg" alt="Turecká káva" loading="lazy" />
               </a>
             </div>
             <div class="card-body">
@@ -312,7 +394,7 @@
           <article class="card">
             <div class="card-image">
               <a href="/clanek-2/">
-                <img src="hero.jpg" alt="Popis obrázku článku" loading="lazy" />
+                <img src="hero.jpg" alt="Matcha vs káva" loading="lazy" />
               </a>
             </div>
             <div class="card-body">
@@ -329,7 +411,7 @@
           <article class="card">
             <div class="card-image">
               <a href="/clanek-3/">
-                <img src="hero.jpg" alt="Popis obrázku článku" loading="lazy" />
+                <img src="hero.jpg" alt="Kofein v kapslích" loading="lazy" />
               </a>
             </div>
             <div class="card-body">
@@ -346,25 +428,38 @@
         </div>
       </section>
 
-      <!-- ── O WEBU ──────────────────────────────────────── -->
+      <!-- ── O WEBU ───────────────────────────────────────── -->
       <section id="o-webu" aria-labelledby="about-heading">
         <p class="section-label" id="about-heading">O webu</p>
         <p class="body">
-          Kofeinová.cz je místo pro lidi, kteří berou kofein vážně — ať už si pochutnávají na single origin espressu, nebo optimalizují výkon pomocí suplementů. Píšeme bez reklam v textu, jen čisté informace.
+          Tohle není jen o kafi.<br><br>
+          Kofeinova.cz je pro všechny, kteří jedou na výkon — a hledají způsoby, jak hacknout energii.<br><br>
+          Kofein, suplementy, energy drinky, matcha a další zdroje energie.<br><br>
+          Gamifikace života místo zbytečného stresu.<br>
+          Hraj ho, ne jen přežívej.
         </p>
       </section>
 
     </div>
   </main>
 
-  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
   <footer>
-    <span>&copy; 2026 <a href="/">kofeinová.cz</a></span>
+    <canvas id="pacman-trail"></canvas>
+    <div class="footer-content">
+    <div class="lives">
+      <span style="font-size:6px; color: var(--zx-cyan); letter-spacing:0.15em;">LIVES</span>
+      <span class="life-icon"></span>
+      <span class="life-icon"></span>
+      <span class="life-icon"></span>
+    </div>
+    <span>&copy; 2026 <a href="/">kofeinova.cz</a></span>
     <span>
       <a href="/ochrana-soukromi/">Ochrana soukromí</a>
       &nbsp;·&nbsp;
       <a href="/cookies/">Cookies</a>
     </span>
+    </div>
   </footer>
 
   <!-- ── IN PROGRESS OVERLAY ───────────────────────────── -->
@@ -379,37 +474,189 @@
     #wip {
       position: fixed;
       inset: 0;
-      background: rgba(30, 10, 50, 0.82);
+      background: rgba(13, 8, 32, 0.88);
       z-index: 999;
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
     #wip-box {
-      border: 3px solid #fff;
+      border: 3px solid var(--ink);
       box-shadow: 6px 6px 0 var(--zx-cyan);
       padding: 2.5rem 3rem;
       text-align: center;
-      background: var(--ink);
+      background: #0d0820;
       color: #fff;
       max-width: 380px;
     }
-
     #wip-label {
-      font-size: 0.7rem;
+      font-size: 8px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--zx-cyan);
       margin-bottom: 1rem;
     }
-
     #wip-text {
-      font-size: 1.1rem;
-      line-height: 1.6;
+      font-size: 13px;
+      line-height: 1.8;
       font-family: 'Courier New', Courier, monospace;
+      color: #fff;
     }
   </style>
+
+  <script>
+    /* ── PAC-MAN DOT TRAIL ───────────────────────────────── */
+    const canvas = document.getElementById('pacman-trail');
+    const ctx    = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width  = canvas.parentElement.offsetWidth;
+      canvas.height = 20;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const DOT_SPACING = 18;
+    const DOT_R = 3;
+    const PAC_R = 7;
+    const SPEED = 1.8;
+
+    let dots = [];
+    function buildDots() {
+      dots = [];
+      const n = Math.floor(canvas.width / DOT_SPACING);
+      for (let i = 0; i < n; i++) {
+        dots.push({ x: i * DOT_SPACING + DOT_SPACING / 2, eaten: false });
+      }
+    }
+    buildDots();
+    window.addEventListener('resize', buildDots);
+
+    let pacX = 0;
+    let dir   = 1;
+    let mouth = 0;
+    let mouthDir = 1;
+
+    const ghosts = [
+      { x: canvas.width * 0.6, color: '#ff0000' },
+      { x: canvas.width * 0.75, color: '#ffb8ff' },
+    ];
+
+    function drawPacMan(x, facingRight) {
+      const startAngle = facingRight ? (mouth * 0.4) : (Math.PI + mouth * 0.4);
+      const endAngle   = facingRight ? (2 * Math.PI - mouth * 0.4) : (3 * Math.PI - mouth * 0.4);
+      ctx.beginPath();
+      ctx.moveTo(x, 10);
+      ctx.arc(x, 10, PAC_R, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = '#ffff00';
+      ctx.fill();
+    }
+
+    function drawGhost(x, color) {
+      const gr = 6;
+      ctx.beginPath();
+      ctx.arc(x, 9, gr, Math.PI, 0);
+      ctx.lineTo(x + gr, 15);
+      for (let s = 0; s < 3; s++) {
+        const sx = x + gr - (s * 2 * gr / 3);
+        ctx.lineTo(sx - gr / 3, 12);
+        ctx.lineTo(sx - 2 * gr / 3, 15);
+      }
+      ctx.lineTo(x - gr, 15);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x - 2, 8, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 2, 8, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#00f';
+      ctx.beginPath(); ctx.arc(x - 1.5, 8, 1, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 2.5, 8, 1, 0, Math.PI * 2); ctx.fill();
+    }
+
+    let cafLevel = 0; // 0–10
+    const cafSegments = document.querySelectorAll('#caf-bar .segment');
+    const cafStatus   = document.getElementById('caf-status');
+    const CAF_STATUSES = ['—','Aktivace','Aktivace','Rozjezd','Rozjezd','Peak','Peak','Cruise','Cruise','Crash','Crash'];
+    const CAF_MAX = 200; // mg
+    let cafMg = 0;
+
+    function updateCaffeine(addMg) {
+      cafMg = Math.min(CAF_MAX, cafMg + addMg);
+      const newLevel = Math.floor((cafMg / CAF_MAX) * 10);
+      if (newLevel !== cafLevel) {
+        cafLevel = newLevel;
+        cafSegments.forEach((seg, i) => {
+          seg.classList.remove('active', 'warm', 'hot');
+          if (i < cafLevel) {
+            if (i < 5)      seg.classList.add('active');
+            else if (i < 8) seg.classList.add('warm');
+            else             seg.classList.add('hot');
+          }
+        });
+        cafStatus.textContent = CAF_STATUSES[cafLevel] || 'OVERDOSE!';
+        cafStatus.style.color = cafLevel >= 9 ? 'var(--zx-red)' : cafLevel >= 6 ? 'var(--zx-yellow)' : 'var(--zx-cyan)';
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = 'rgba(33,33,222,0.5)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(0, 10);
+      ctx.lineTo(canvas.width, 10);
+      ctx.stroke();
+
+      dots.forEach(d => {
+        if (!d.eaten) {
+          ctx.beginPath();
+          ctx.arc(d.x, 10, DOT_R, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+        }
+      });
+
+      mouth += mouthDir * 0.12;
+      if (mouth > 1) mouthDir = -1;
+      if (mouth < 0) mouthDir =  1;
+
+      pacX += SPEED * dir;
+      if (pacX > canvas.width + PAC_R) {
+        pacX = -PAC_R;
+        dots.forEach(d => d.eaten = false);
+        cafMg = 0; cafLevel = 0;
+        cafSegments.forEach(s => s.classList.remove('active','warm','hot'));
+        cafStatus.textContent = '—';
+        cafStatus.style.color = 'var(--zx-cyan)';
+      }
+      if (pacX < -PAC_R) { pacX = canvas.width + PAC_R; dots.forEach(d => d.eaten = false); }
+
+      dots.forEach(d => {
+        if (!d.eaten && Math.abs(d.x - pacX) < PAC_R + DOT_R) {
+          d.eaten = true;
+          updateCaffeine(4);
+        }
+      });
+
+      ghosts.forEach((g, i) => {
+        g.x -= (SPEED * 0.5) * (i % 2 === 0 ? 1 : 0.7);
+        if (g.x < -10) g.x = canvas.width + 10;
+        drawGhost(g.x, g.color);
+      });
+
+      drawPacMan(pacX, dir === 1);
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    document.querySelectorAll('article.card').forEach(card => {
+      card.addEventListener('mouseenter', () => updateCaffeine(20));
+    });
+  </script>
 
 </body>
 </html>
