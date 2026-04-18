@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Kofein jako kofein? V praxi úplně jiný zážitek. Kdy dává smysl tableta a kdy káva — praktické srovnání." />
+  <title>Kofein v tabletách vs. káva — co funguje lépe? — Kofeinova.cz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --purple:     #c084fc;
+      --bg:         #0d0820;
+      --text:       #ffffff;
+      --muted:      #ffffff;
+      --ink:        #e0d0f0;
+      --zx-cyan:    #00cfcf;
+      --zx-magenta: #cf00cf;
+      --zx-yellow:  #d4d400;
+      --zx-green:   #00c800;
+      --zx-blue:    #5555ff;
+      --zx-red:     #d40000;
+      --maze:       #2121de;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #0a0a12;
+      background-image:
+        radial-gradient(ellipse at 50% 72%, rgba(220,40,120,0.35) 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 80%, rgba(120,0,180,0.25) 0%, transparent 45%),
+        linear-gradient(to bottom, #0a0a12 0%, #100818 55%, #1a0828 100%);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      line-height: 2;
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 50vh;
+      background-image:
+        linear-gradient(to bottom, transparent 0%, rgba(180,0,120,0.08) 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent calc(10% - 1px),
+          rgba(180,40,160,0.25) calc(10% - 1px),
+          rgba(180,40,160,0.25) 10%
+        ),
+        repeating-linear-gradient(
+          180deg,
+          transparent,
+          transparent calc(12% - 1px),
+          rgba(180,40,160,0.2) calc(12% - 1px),
+          rgba(180,40,160,0.2) 12%
+        );
+      transform: perspective(300px) rotateX(45deg);
+      transform-origin: bottom center;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    main, header, footer { position: relative; z-index: 1; }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--zx-cyan); }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    header {
+      border-bottom: 4px solid var(--maze);
+      box-shadow: 0 4px 0 0 rgba(33,33,222,0.4);
+      padding: 0.6rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,8,32,0.92);
+    }
+
+    .logo {
+      flex-shrink: 0;
+      width: 110px;
+      height: 90px;
+      overflow: hidden;
+    }
+    .logo img {
+      height: 180px;
+      width: auto;
+      display: block;
+      filter: invert(1) sepia(1) saturate(5) hue-rotate(150deg)
+              drop-shadow(0 0 6px #00cfcf) drop-shadow(0 0 12px rgba(0,207,207,0.5));
+      mix-blend-mode: screen;
+      margin-top: -48px;
+      margin-left: -82px;
+      animation: logo-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes logo-pulse {
+      0%, 100% { filter: invert(1) sepia(1) saturate(5) hue-rotate(150deg)
+                         drop-shadow(0 0 6px #00cfcf) drop-shadow(0 0 12px rgba(0,207,207,0.5)); }
+      50%       { filter: invert(1) sepia(1) saturate(5) hue-rotate(150deg)
+                         drop-shadow(0 0 12px #00cfcf) drop-shadow(0 0 28px rgba(0,207,207,0.8)); }
+    }
+
+    .caffeine-board {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 6px;
+      letter-spacing: 0.15em;
+    }
+    .caffeine-board .label { color: var(--zx-cyan); font-size: 6px; text-transform: uppercase; }
+    .caffeine-bar { display: flex; gap: 2px; align-items: center; }
+    .caffeine-bar .segment {
+      width: 10px; height: 14px;
+      background: #1a0f2e;
+      border: 1px solid #444;
+      transition: background 0.3s;
+    }
+    .caffeine-bar .segment.active { background: var(--zx-cyan); }
+    .caffeine-bar .segment.warm   { background: var(--zx-yellow); }
+    .caffeine-bar .segment.hot    { background: var(--zx-red); }
+    .caffeine-status {
+      font-size: 6px; color: var(--zx-cyan);
+      letter-spacing: 0.1em; text-align: center; min-height: 10px;
+    }
+
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav a {
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--zx-cyan);
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s;
+    }
+    nav a:hover {
+      color: var(--zx-yellow);
+      border-bottom-color: var(--zx-yellow);
+    }
+
+    /* ── CONTAINER ───────────────────────────────────────── */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── BREADCRUMB ──────────────────────────────────────── */
+    .breadcrumb {
+      padding: 1.5rem 0 0.5rem;
+      font-size: 7px;
+      color: var(--zx-cyan);
+      letter-spacing: 0.15em;
+      opacity: 0.8;
+    }
+    .breadcrumb a { color: var(--zx-cyan); }
+    .breadcrumb a:hover { color: var(--zx-yellow); }
+    .breadcrumb span { color: #fff; opacity: 0.5; margin: 0 0.5rem; }
+
+    /* ── ARTICLE ─────────────────────────────────────────── */
+    article.single {
+      padding: 2rem 0 4rem;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 7px;
+      letter-spacing: 0.15em;
+    }
+    .article-category {
+      background: var(--zx-cyan);
+      color: #000;
+      padding: 3px 8px;
+      font-size: 6px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .article-date { color: var(--zx-cyan); opacity: 0.7; }
+
+    h1.article-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--zx-cyan);
+      padding-left: 1rem;
+    }
+
+    .article-white {
+      background: #ffffff;
+      border: 4px solid var(--maze);
+      box-shadow: 0 0 20px rgba(33,33,222,0.15);
+      padding: 2rem 2.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .article-annotation {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #1a0a2e;
+      margin-bottom: 2rem;
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--maze);
+      border-left: 4px solid var(--maze);
+      background: #eef0ff;
+    }
+
+    .article-hero {
+      width: 100%;
+      aspect-ratio: 16/7;
+      overflow: hidden;
+      border: 4px solid var(--maze);
+      margin-bottom: 2rem;
+    }
+    .article-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+
+    .article-body {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 15px;
+      line-height: 1.9;
+      color: #1a0a2e;
+    }
+
+    .article-body h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--maze);
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--maze);
+    }
+
+    .article-body p {
+      margin-bottom: 1.4rem;
+    }
+
+    .article-body mark {
+      background: none;
+      color: inherit;
+      padding: 0;
+      font-weight: bold;
+    }
+
+    .article-body ul {
+      margin: 0 0 1.4rem 1.5rem;
+      list-style: none;
+      padding: 0;
+    }
+    .article-body ul li {
+      padding-left: 1.2rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+    .article-body ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--zx-cyan);
+    }
+
+    .article-body a {
+      color: #1a0a2e;
+      text-decoration: none;
+      border-bottom: 2px solid var(--maze);
+      padding-bottom: 1px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .article-body a:hover {
+      background: var(--maze);
+      color: #fff;
+      border-bottom-color: transparent;
+      padding: 0 3px 1px;
+    }
+
+    /* tip box */
+    .tip-box {
+      border: 2px solid var(--maze);
+      border-left: 4px solid #006600;
+      background: #f0fff0;
+      padding: 1rem 1.5rem;
+      margin: 1.8rem 0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #1a0a2e;
+    }
+    .tip-box .tip-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #006600;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    /* ── BACK LINK ───────────────────────────────────────── */
+    .back-link {
+      display: inline-block;
+      margin-top: 3rem;
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--maze);
+      color: var(--zx-cyan);
+      font-size: 7px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: background 0.15s, color 0.15s;
+    }
+    .back-link:hover {
+      background: var(--maze);
+      color: #fff;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: rgba(13,8,32,0.7);
+      display: flex;
+      flex-direction: column;
+    }
+    #pacman-trail {
+      width: 100%;
+      height: 20px;
+      display: block;
+    }
+    .footer-content {
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    footer a:hover { color: var(--zx-cyan); }
+    .lives { display: flex; gap: 6px; align-items: center; }
+    .life-icon {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: var(--zx-yellow);
+      clip-path: polygon(50% 0%, 100% 35%, 80% 100%, 20% 100%, 0% 35%);
+    }
+
+    @media (max-width: 720px) {
+      h1.article-title { font-size: 10px; }
+      .article-annotation { font-size: 14px; }
+      .article-body { font-size: 14px; }
+      header { padding: 0.8rem 1rem; }
+      nav ul { gap: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── HEADER ────────────────────────────────────────────── -->
+  <header>
+    <a href="/" class="logo" aria-label="Kofeinova – domů">
+      <img src="../logo_kofein.png" alt="Kofeinova" />
+    </a>
+
+    <div class="caffeine-board">
+      <span class="label">☕ kofein</span>
+      <div class="caffeine-bar" id="caf-bar">
+        <div class="segment" data-i="0"></div>
+        <div class="segment" data-i="1"></div>
+        <div class="segment" data-i="2"></div>
+        <div class="segment" data-i="3"></div>
+        <div class="segment" data-i="4"></div>
+        <div class="segment" data-i="5"></div>
+        <div class="segment" data-i="6"></div>
+        <div class="segment" data-i="7"></div>
+        <div class="segment" data-i="8"></div>
+        <div class="segment" data-i="9"></div>
+      </div>
+      <span class="caffeine-status" id="caf-status">—</span>
+    </div>
+
+    <nav aria-label="Hlavní navigace">
+      <ul>
+        <li><a href="/#clanky">Články</a></li>
+        <li><a href="/#kategorie">Kategorie</a></li>
+        <li><a href="/#o-webu">O webu</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ── HLAVNÍ OBSAH ───────────────────────────────────────── -->
+  <main>
+    <div class="container">
+
+      <nav class="breadcrumb" aria-label="Drobečková navigace">
+        <a href="/">Kofeinova.cz</a>
+        <span>›</span>
+        <a href="/#clanky">Články</a>
+        <span>›</span>
+        Kofein v tabletách
+      </nav>
+
+      <article class="single">
+
+        <div class="article-meta">
+          <span class="article-category">Suplementy</span>
+          <time class="article-date" datetime="2026-04-01">01. 04. 2026</time>
+        </div>
+
+        <h1 class="article-title">Kofein v tabletách vs. káva — co funguje lépe?</h1>
+
+        <div class="article-white">
+
+          <p class="article-annotation">
+            Kofein jako kofein? V praxi úplně jiný zážitek. Kdy dává smysl tableta a kdy káva — praktické srovnání.
+          </p>
+
+          <div class="article-hero">
+            <img src="../pills_edited.jpg" alt="Kofein v tabletách a kapslích" />
+          </div>
+
+          <div class="article-body">
+
+            <p>
+              Na papíře jednoduché: kofein jako kofein.
+            </p>
+
+            <p>
+              V praxi úplně jiný zážitek.
+            </p>
+
+            <p>
+              <mark>Káva</mark> je komplexní nápoj — chuť, vůně, rituál, stovky dalších látek.
+              <mark>Tableta</mark> je čistý zásah — přesná dávka, žádná omáčka.
+            </p>
+
+            <h2>Rychlost nástupu</h2>
+
+            <p>
+              Tady se to láme.
+            </p>
+
+            <p>
+              Tableta má rychlý, ostrý nástup. Prostě spike.
+            </p>
+
+            <p>
+              Káva je pomalejší. Už jen proto, že ji nepiješ na ex.
+            </p>
+
+            <ul>
+              <li>tableta = rychlý boost</li>
+              <li>káva = plynulejší nájezd</li>
+            </ul>
+
+            <h2>Kontrola dávky</h2>
+
+            <p>
+              Tady tablety vyhrávají bez debat.
+            </p>
+
+            <p>
+              Jedna tableta = jasně dané množství (100–200 mg).
+            </p>
+
+            <p>
+              U kávy je to loterie:
+            </p>
+
+            <ul>
+              <li>espresso ≠ espresso</li>
+              <li>filtr ≠ filtr</li>
+              <li>každé zrnko jiné</li>
+            </ul>
+
+            <p>
+              Pokud chceš mít kofein pod kontrolou (výkon, spánek),
+              <mark>tableta je přesnější nástroj.</mark>
+            </p>
+
+            <h2>Efekt na tělo</h2>
+
+            <p>
+              Káva:
+            </p>
+
+            <ul>
+              <li>stimuluje trávení</li>
+              <li>může být kyselá</li>
+              <li>obsahuje další látky</li>
+            </ul>
+
+            <p>
+              Tablety:
+            </p>
+
+            <ul>
+              <li>čistý kofein</li>
+              <li>méně balastu</li>
+              <li>tvrdší dopad</li>
+            </ul>
+
+            <p>
+              <mark>Káva = měkčí experience</mark><br>
+              <mark>Tableta = čistý výkon</mark>
+            </p>
+
+            <h2>Rituál vs. nástroj</h2>
+
+            <p>
+              Tohle často rozhoduje víc než chemie.
+            </p>
+
+            <p>
+              Káva je rituál:
+            </p>
+
+            <ul>
+              <li>pauza</li>
+              <li>chuť</li>
+              <li>moment pro sebe</li>
+            </ul>
+
+            <p>
+              Tableta je nástroj:
+            </p>
+
+            <ul>
+              <li>žádná emoce</li>
+              <li>žádná pauza</li>
+              <li>jen efekt</li>
+            </ul>
+
+            <h2>Kdy tablety dávají smysl</h2>
+
+            <p>
+              Jsou situace, kde káva prostě nedává smysl.
+            </p>
+
+            <p>
+              <mark>Pigment a zuby</mark><br>
+              Káva barví. Pokud řešíš bělení, je to problém.
+            </p>
+
+            <p>
+              Tableta tenhle problém nemá.
+            </p>
+
+            <p>
+              <mark>Diskrétnost</mark><br>
+              Ne vždy je vhodné někde popíjet:
+            </p>
+
+            <ul>
+              <li>meetingy</li>
+              <li>formální prostředí</li>
+              <li>situace, kde nechceš rušit</li>
+            </ul>
+
+            <p>
+              Tableta je neviditelná.
+            </p>
+
+            <p>
+              <mark>Logistika</mark><br>
+              Nemáš přístup ke kvalitní kávě? Nechceš riskovat automat?
+            </p>
+
+            <p>
+              Tableta je konstantní.
+            </p>
+
+            <h2>Když je káva špatný nápad</h2>
+
+            <p>
+              Ne každá káva je dobrá káva.
+            </p>
+
+            <p>
+              A někdy to není kompromis. Je to trest.
+            </p>
+
+            <p>
+              <mark>Automaty a instantní káva</mark>
+            </p>
+
+            <ul>
+              <li>divná chuť</li>
+              <li>přepálená hořkost</li>
+              <li>cukr nic nezachrání</li>
+            </ul>
+
+            <p>
+              V takové situaci je tableta lepší volba.
+            </p>
+
+            <p>
+              Ne protože je lepší než káva obecně —
+              ale protože je <mark>lepší než špatná káva</mark>.
+            </p>
+
+            <p>
+              Někdy nejde o to dát si dobrou kávu.
+            </p>
+
+            <p>
+              Někdy jde jen o to <mark>nedat si špatnou</mark>.
+            </p>
+
+            <h2>Když káva není možnost</h2>
+
+            <p>
+              Jsou situace, kde si ji prostě neuděláš.
+            </p>
+
+            <p>
+              Příroda. Cestování. Přesuny.
+            </p>
+
+            <p>
+              Žádný kávovar. Žádný filtr. Žádné zázemí.
+            </p>
+
+            <p>
+              Ale potřeba „nakopnout se" nezmizí.
+            </p>
+
+            <p>
+              <mark>Tableta dává perfektní smysl:</mark>
+            </p>
+
+            <ul>
+              <li>minimum místa</li>
+              <li>nulová příprava</li>
+              <li>okamžitý efekt</li>
+            </ul>
+
+            <p>
+              Když není infrastruktura na kávu,
+              je dobré mít kofein po ruce.
+            </p>
+
+            <h2>Kdy dává smysl co</h2>
+
+            <p>
+              <mark>Káva:</mark>
+            </p>
+
+            <ul>
+              <li>chceš pauzu</li>
+              <li>řešíš chuť</li>
+              <li>nechceš spike</li>
+            </ul>
+
+            <p>
+              <mark>Tableta:</mark>
+            </p>
+
+            <ul>
+              <li>potřebuješ rychlý boost</li>
+              <li>chceš přesnou dávku</li>
+              <li>neřešíš prostředí</li>
+            </ul>
+
+            <h2>Realita</h2>
+
+            <p>
+              Největší chyba je vybírat si jen jednu variantu.
+            </p>
+
+            <p>
+              Chytřejší přístup:
+            </p>
+
+            <ul>
+              <li>káva jako základ</li>
+              <li>tableta jako nástroj</li>
+            </ul>
+
+            <p>
+              Ráno káva. Když jde o výkon → tableta.
+            </p>
+
+            <div class="tip-box">
+              <span class="tip-label">// bottom line</span>
+              Kofein není problém.<br>
+              Problém je, když ho používáš náhodně.
+            </div>
+
+          </div>
+
+          <a href="../" class="back-link">← zpět na hlavní stránku</a>
+
+        </div>
+
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <canvas id="pacman-trail"></canvas>
+    <div class="footer-content">
+      <div class="lives">
+        <span style="font-size:6px; color: var(--zx-cyan); letter-spacing:0.15em;">LIVES</span>
+        <span class="life-icon"></span>
+        <span class="life-icon"></span>
+        <span class="life-icon"></span>
+      </div>
+      <span>&copy; 2026 <a href="/">kofeinova.cz</a></span>
+      <span>
+        <a href="/ochrana-soukromi/">Ochrana soukromí</a>
+        &nbsp;·&nbsp;
+        <a href="/cookies/">Cookies</a>
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('pacman-trail');
+    const ctx    = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width  = canvas.parentElement.offsetWidth;
+      canvas.height = 20;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const DOT_SPACING = 18;
+    const DOT_R = 3;
+    const PAC_R = 7;
+    const SPEED = 1.8;
+
+    let dots = [];
+    function buildDots() {
+      dots = [];
+      const n = Math.floor(canvas.width / DOT_SPACING);
+      for (let i = 0; i < n; i++) {
+        dots.push({ x: i * DOT_SPACING + DOT_SPACING / 2, eaten: false });
+      }
+    }
+    buildDots();
+    window.addEventListener('resize', buildDots);
+
+    let pacX = 0;
+    let mouth = 0;
+    let mouthDir = 1;
+
+    const ghosts = [
+      { x: canvas.width * 0.6, color: '#ff0000' },
+      { x: canvas.width * 0.75, color: '#ffb8ff' },
+    ];
+
+    function drawPacMan(x) {
+      const startAngle = mouth * 0.4;
+      const endAngle   = 2 * Math.PI - mouth * 0.4;
+      ctx.beginPath();
+      ctx.moveTo(x, 10);
+      ctx.arc(x, 10, PAC_R, startAngle, endAngle);
+      ctx.closePath();
+      ctx.fillStyle = '#ffff00';
+      ctx.fill();
+    }
+
+    function drawGhost(x, color) {
+      const gr = 6;
+      ctx.beginPath();
+      ctx.arc(x, 9, gr, Math.PI, 0);
+      ctx.lineTo(x + gr, 15);
+      for (let s = 0; s < 3; s++) {
+        const sx = x + gr - (s * 2 * gr / 3);
+        ctx.lineTo(sx - gr / 3, 12);
+        ctx.lineTo(sx - 2 * gr / 3, 15);
+      }
+      ctx.lineTo(x - gr, 15);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(x - 2, 8, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 2, 8, 2, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#00f';
+      ctx.beginPath(); ctx.arc(x - 1.5, 8, 1, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(x + 2.5, 8, 1, 0, Math.PI * 2); ctx.fill();
+    }
+
+    let cafLevel = 0;
+    let cafMg = 0;
+    const CAF_MAX = 200;
+    const cafSegments = document.querySelectorAll('#caf-bar .segment');
+    const cafStatus   = document.getElementById('caf-status');
+    const CAF_STATUSES = ['—','Aktivace','Aktivace','Rozjezd','Rozjezd','Peak','Peak','Cruise','Cruise','Crash','Crash'];
+
+    function updateCaffeine(addMg) {
+      cafMg = Math.min(CAF_MAX, cafMg + addMg);
+      const newLevel = Math.floor((cafMg / CAF_MAX) * 10);
+      if (newLevel !== cafLevel) {
+        cafLevel = newLevel;
+        cafSegments.forEach((seg, i) => {
+          seg.classList.remove('active', 'warm', 'hot');
+          if (i < cafLevel) {
+            if (i < 5)      seg.classList.add('active');
+            else if (i < 8) seg.classList.add('warm');
+            else             seg.classList.add('hot');
+          }
+        });
+        cafStatus.textContent = CAF_STATUSES[cafLevel] || 'OVERDOSE!';
+        cafStatus.style.color = cafLevel >= 9 ? 'var(--zx-red)' : cafLevel >= 6 ? 'var(--zx-yellow)' : 'var(--zx-cyan)';
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = '#2121de';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(0, 10);
+      ctx.lineTo(canvas.width, 10);
+      ctx.stroke();
+
+      dots.forEach(d => {
+        if (!d.eaten) {
+          ctx.beginPath();
+          ctx.arc(d.x, 10, DOT_R, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.fill();
+        }
+      });
+
+      mouth += mouthDir * 0.12;
+      if (mouth > 1) mouthDir = -1;
+      if (mouth < 0) mouthDir =  1;
+
+      pacX += SPEED;
+      if (pacX > canvas.width + PAC_R) {
+        pacX = -PAC_R;
+        dots.forEach(d => d.eaten = false);
+        cafMg = 0; cafLevel = 0;
+        cafSegments.forEach(s => s.classList.remove('active','warm','hot'));
+        cafStatus.textContent = '—';
+        cafStatus.style.color = 'var(--zx-cyan)';
+      }
+
+      dots.forEach(d => {
+        if (!d.eaten && Math.abs(d.x - pacX) < PAC_R + DOT_R) {
+          d.eaten = true;
+          updateCaffeine(4);
+        }
+      });
+
+      ghosts.forEach((g, i) => {
+        g.x -= (SPEED * 0.5) * (i % 2 === 0 ? 1 : 0.7);
+        if (g.x < -10) g.x = canvas.width + 10;
+        drawGhost(g.x, g.color);
+      });
+
+      drawPacMan(pacX);
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>
